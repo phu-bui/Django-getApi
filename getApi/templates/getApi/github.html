@@ -1,0 +1,45 @@
+{% extends 'index.html' %}
+
+{% block content %}
+
+
+        <div class="row no-gutters">
+          <div class="content col-xl-5 d-flex align-items-stretch" data-aos="fade-up">
+            <div class="content">
+              <h2>GitHub API</h2>
+              <h5>Enter github username</h5>
+              <form method="get">
+                <input type="text" name="username">
+                <button type="submit">search on github</button>
+              </form>
+            </div>
+          </div>
+          <div class="col-xl-7 d-flex align-items-stretch">
+            <div class="icon-boxes d-flex flex-column justify-content-center">
+              <div class="row">
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="100">
+                  <i class="bx bx-receipt"></i>
+                  <h4>The existing repositories</h4>
+                    {% if search_result %}
+                  {% if search_result.success %}
+                  <p>
+                    <strong>{{ search_result.name|default_if_none:search_result.login }}</strong> has
+                    <strong>{{ search_result.public_repos }}</strong> public repositories.
+                  </p>
+                  {% else %}
+                  <p><em>{{ search_result.message }}</em></p>
+                  {% endif %}
+                </div>
+                <div class="col-md-6 icon-box" data-aos="fade-up" data-aos-delay="200">
+                  <i class="bx bx-cube-alt"></i>
+                  <h4>Rate</h4>
+                  <p>Rate limit: {{ search_result.rate.remaining }}/{{ search_result.rate.limit }}</p>
+                </div>
+                {% endif %}
+
+              </div>
+            </div><!-- End .content-->
+          </div>
+        </div>
+
+{% endblock %}
